@@ -14,7 +14,7 @@ allprojects {
 }
 
 subprojects {
-    version = '1.0'
+    // version = '1.0'
     apply plugin: 'scala'
     apply plugin: 'com.github.johnrengelman.shadow'
 
