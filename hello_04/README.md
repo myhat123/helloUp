@@ -74,6 +74,8 @@ psql中切换模式
 show search_path;
 set search_path to finance;
 
+ALTER ROLE jxyz SET search_path = finance;
+
 python psycopg2安装
 ==================
 
