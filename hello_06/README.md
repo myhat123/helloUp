@@ -1,5 +1,6 @@
 airflow
 =======
+版本是 airflow 1.10.12
 
 参考资料:  
 http://airflow.apache.org/docs/stable/start.html
