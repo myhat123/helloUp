@@ -34,6 +34,26 @@ class SQLDB(object):
 
         self.conn.commit()
 
+    def read_data(self):
+        self.cursor.itersize = 20000
+
+        self.cursor.execute("""
+            select acc, tran_date, rpt_sum, dr_cr_flag, amt FROM brch_qry_dtl
+        """)
+
+        results = []
+        for r in self.cursor.fetchall():
+            d = dict()
+            d['acc'] = r[0]
+            d['tran_date'] = r[1]
+            d['rpt_sum'] = r[2]
+            d['dr_cr_flag'] = r[3]
+            d['amt'] = r[4]
+
+            results.append(d)
+
+        return results
+
 def get_data(filename: str) -> List[str]:
     data = []
     f = open(filename, 'rt')
