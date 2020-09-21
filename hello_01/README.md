@@ -45,6 +45,12 @@ http://localhost:8080/
 
 > ./bin/spark-shell --master spark://localhost:7077
 
+构建打包
+=======
+
+gradle build
+gradle shadowJar
+
 提交计算
 =======
 

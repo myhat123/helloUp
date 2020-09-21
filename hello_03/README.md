@@ -1,3 +1,14 @@
+读取cassandra
+============
+
+cassandra配置，参见hello_07
+
+构建打包
+=======
+
+gradle build
+gradle shadowJar
+
 提交计算
 =======
 

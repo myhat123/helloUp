@@ -4,12 +4,15 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 
-import conf.Utils
+import conf.{Utils, CassSetting}
 
 object BrchQry {
   def main(args: Array[String]) {
     val spark = SparkSession
       .builder
+      .config("spark.cassandra.connection.host", CassSetting.host)
+      .config("spark.cassandra.auth.username", CassSetting.username)
+      .config("spark.cassandra.auth.password", CassSetting.password)
       .appName("查询cassandra数据")
       .getOrCreate()
 

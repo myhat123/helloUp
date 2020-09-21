@@ -19,10 +19,10 @@ func connectSession() *gocql.Session {
 	cluster.PageSize = 20000
 	cluster.PoolConfig.HostSelectionPolicy = gocql.TokenAwareHostPolicy(gocql.RoundRobinHostPolicy())
 
-	// cluster.Authenticator = gocql.PasswordAuthenticator{
-	// 	Username: "cassandra",
-	// 	Password: "",
-	// }
+	cluster.Authenticator = gocql.PasswordAuthenticator{
+		Username: "cassandra",
+		Password: "cassandra",
+	}
 
 	session, _ := cluster.CreateSession()
 	time.Sleep(1 * time.Second)

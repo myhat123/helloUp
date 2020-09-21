@@ -5,3 +5,9 @@ object Utils {
         a + b
     }
 }
+
+object CassSetting {
+    val host = "localhost"
+    val username = "cassandra"
+    val password = "cassandra"
+}

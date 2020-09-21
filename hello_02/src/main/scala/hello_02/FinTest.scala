@@ -11,6 +11,9 @@ object FinTest {
   def main(args: Array[String]) {
     val spark = SparkSession
       .builder
+      .config("spark.cassandra.connection.host", "localhost")
+      .config("spark.cassandra.auth.username", "cassandra")
+      .config("spark.cassandra.auth.password", "cassandra")
       .appName("写入cassandra数据")
       .getOrCreate()
     
