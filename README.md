@@ -1,3 +1,17 @@
+软件包升级
+=========
+
+spark 2.4.7  
+cassandra 3.11.8  
+postgresql 12  
+pgbouncer  
+airflow 1.10.12  
+pandas 1.1.2  
+go 1.5.2  
+
+示例
+====
+
 hello_01  升级到spark 2.4.7  
 hello_02  spark cassandra connector写入cass  
 hello_03  gradle多项目构建spark应用  
