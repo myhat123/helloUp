@@ -14,14 +14,13 @@ cassandra集群的前提条件是，启用时间同步服务器，确保集群�
 运行
 ===
 
-cassandra -f
+> cassandra -f
 
 命令行访问
 ========
 
-pyenv activate gopy3
-
-cqlsh -u cassandra -p cassandra localhost
+> pyenv activate gopy3
+> cqlsh -u cassandra -p cassandra localhost
 
 cassandra配置
 ============
@@ -30,6 +29,7 @@ cassandra配置
 
 常见配置选项
 
+```yaml
 # The name of the cluster. This is mainly used to prevent machines in
 # one logical cluster from joining another.
 cluster_name: 'Test Cluster'
@@ -86,24 +86,56 @@ listen_address: localhost
 #
 # For security reasons, you should not expose this port to the internet.  Firewall it if needed.
 rpc_address: localhost
-
+```
 
 安全认证配置
 ===========
 
 配置文件 conf/cassandra.yaml
 
+```yaml
 authenticator: PaswordAuthenticator
+```
 
 默认的用户/口令 cassandra/cassandra
 
+```sql
 alter user cassandra with password '1234';
-
 create user test with password '1234;
+```
 
+```cql
 list users;
-
 login test '1234'
+```
+
+可调的一致性
+==========
+
+写一致性级别
+读一致性级别
+
+性能调优
+=======
+
+cassandra权威指南（中文版）
+
+P326 并发和线程
+
+concurrent_reads     硬盘个数x16  
+concurrent_writes    默认是32，可调整为应用服务器连接cassandra的线程数  
+concurrent_counter_writes  
+concurrent_materialized_view_writes  
+
+P28 网络和超时
+
+read_request_timeout_in_ms  
+range_request_timeout_in_ms  
+write_request_timeout_in_ms  
+....
+
+cross_node_timeout false  
+启用ntp
 
 python读取cass
 =============
