@@ -5,3 +5,8 @@ pandas
 
 pip install pandas
 
+文档
+===
+
+https://pandas.pydata.org/  
+https://www.pypandas.cn/
