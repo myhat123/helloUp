@@ -2,7 +2,7 @@ import pandas as pd
 
 import psycopg2
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 CONN_STR = 'postgresql://jxyz:1234@localhost:6432/db_jr'
 
@@ -13,12 +13,26 @@ class QryRec:
     def __init__(self):
         self.conn = psycopg2.connect(CONN_STR)
  
-    def get_qry_dtl(self, d):
+    def set_tran_date(self, d):
+        self.tran_date = d
+    
+    def get_time_range(self):
+        
+        #前一日
+        d = datetime.strptime(self.tran_date, '%Y%m%d') - timedelta(days=1)
+
+        x1 = d.strftime('%Y%m%d') + ' 223000'
+        x2 = self.tran_date + ' 223000'
+
+        #series转dataframe，重置index，重命名列名，过滤列
+        return pd.date_range(x1, x2, freq='30min').to_frame().reset_index().rename(columns={'index': 'time'})['time']
+
+    def get_qry_dtl(self):
         self.df = pd.read_sql('''
             select acc, rpt_sum, amt, dr_cr_flag, timestamp1 
             from finance.brch_qry_dtl
             where tran_date=%s
-        ''', self.conn, params=(d,))
+        ''', self.conn, params=(self.tran_date,))
 
     def total_amt(self, dr_cr_flag=1):
         # select sum(amt) from brch_qry_dtl where dr_cf_flag=%s
@@ -66,12 +80,18 @@ class QryRec:
         x = self.df.sort_values(by=['time'], ascending=True)
         y = x[['amt', 'time']].resample('30min', on='time').sum()
 
+        #时间序列
+        k = self.get_time_range()
+
+        #左连接合并，空值转为0
+        z = pd.merge(k, y, on='time', how='left').fillna(0)
+
         rec = []
-        for r in y.itertuples():
+        for r in z.itertuples():
             d = dict()
 
             #time作为Index
-            d['time'] = r.Index
+            d['time'] = r.time
             d['amt'] = r.amt
 
             rec.append(d)
@@ -85,14 +105,20 @@ class QryRec:
 
         #排序，不改变原有的dataframe
         x = self.df.sort_values(by=['time'], ascending=True)
-        y = x[['amt', 'time']].resample('30min', on='time').sum().cumsum()
+        y = x[['amt', 'time']].resample('30min', on='time').sum()
 
         #转换Index为Column
-        y.reset_index(inplace=True)
-        y = y.rename(columns={'index': 'time'})
+        # y.reset_index(inplace=True)
+        # y = y.rename(columns={'index': 'time'})
+
+        #时间序列
+        k = self.get_time_range()
+
+        #左连接合并，空值转为0
+        z = pd.merge(k, y, on='time', how='left').fillna(0).cumsum()
         
         rec = []
-        for r in y.itertuples():
+        for r in z.itertuples():
             d = dict()
 
             #time作为Column
@@ -105,7 +131,13 @@ class QryRec:
 
 if __name__ == '__main__':
     q = QryRec()
-    q.get_qry_dtl('2019-11-27')
+    q.set_tran_date('20191127')
+
+    q.get_qry_dtl()
     # print(q.total_amt_apart())
     # print(q.get_acc_detail(1, '他行来账'))
+    # print(q.total_every_30min_cumsum())
+
+    # print(q.get_time_range())
+    # print(q.total_every_30min())
     print(q.total_every_30min_cumsum())
