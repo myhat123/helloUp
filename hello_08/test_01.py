@@ -1,5 +1,5 @@
 import pandas as pd
-
+import matplotlib.pyplot as plt
 import psycopg2
 
 from datetime import datetime, timedelta
@@ -129,6 +129,27 @@ class QryRec:
 
         return rec
 
+    def show_every_period_plot(self, period='30min'):
+
+        #转换，增加一列time
+        self.df['time'] = self.df['timestamp1'].map(conv_time)
+
+        #排序，不改变原有的dataframe
+        x = self.df.sort_values(by=['time'], ascending=True)
+        y = x[['amt', 'time']].resample(period, on='time').sum()
+
+        #时间序列
+        k = self.get_time_range()
+
+        #左连接合并，空值转为0
+        z = pd.merge(k, y, on='time', how='left').fillna(0)
+
+        # print(z['amt'])
+        s = pd.Series(z['amt'].to_list(), index=z['time'].to_list())
+
+        s.plot()
+        plt.show()
+
 if __name__ == '__main__':
     q = QryRec()
     q.set_tran_date('20191127')
@@ -140,4 +161,5 @@ if __name__ == '__main__':
 
     # print(q.get_time_range())
     # print(q.total_every_30min())
-    print(q.total_every_30min_cumsum())
+    # print(q.total_every_30min_cumsum())
+    q.show_every_period_plot()
