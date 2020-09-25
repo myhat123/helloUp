@@ -1,6 +1,8 @@
 import hashlib
 import random
 import math
+
+from typing import Dict, List, Tuple
 from datetime import datetime
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
@@ -43,7 +45,7 @@ def make_image(FONT: str, s: str) -> BytesIO:
 
     return buffer
 
-def center_text(text):
+def center_text(text: List[str]) -> List[str]:
     '''文本列表居中对齐'''
 
     max_len = max([len(x.encode('gbk')) for x in text])
@@ -56,7 +58,7 @@ def center_text(text):
 
     return results
 
-def add_text_to_image(FONT, text):
+def add_text_to_image(FONT: str, text: List[str]) -> BytesIO:
     '''加水印文字'''
 
     font = ImageFont.truetype(FONT, 24)
