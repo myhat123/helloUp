@@ -34,8 +34,8 @@ func GetQryCdmDtl(plat string, table string, size int, date ...string) {
 		       tran_inst, bal, amt, amt_type, tran_code,
 		       csh_tsf_flag, dr_cr_flag, accu, rpt_sum,
 		       n_tran_type, timestamp1, opr_tlr, b_sub_tab_flag, bgn_int_date 
-		from ` + table_name + ` where rownum<=1000`, 
-		godror.PrefetchCount(PREFETCH_COUNT), 
+		from `+table_name+` where rownum<=1000`,
+		godror.PrefetchCount(PREFETCH_COUNT),
 		godror.FetchArraySize(ARRAY_SIZE))
 
 	if err != nil {

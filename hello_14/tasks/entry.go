@@ -11,6 +11,6 @@ func writeCassDB(session *gocql.Session, data interface{}) bool {
 	if savqrys, ok := data.([]*CQryCdmDtl); ok {
 		insQryCdmDtl(session, savqrys)
 	}
-	
+
 	return true
 }
