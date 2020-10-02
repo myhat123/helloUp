@@ -55,3 +55,5 @@ gradle shadowJar
 =======
 
 > spark-submit --master spark://localhost:7077 --class hello_01.SparkPi ./build/libs/hello_01-all.jar
+
+> spark-submit --master spark://localhost:7077 --deploy-mode client --total-executor-cores 2 --executor-memory 512M --class hello_01.SparkPi ./build/libs/hello_01-all.jar
