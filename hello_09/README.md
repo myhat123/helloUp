@@ -60,6 +60,12 @@ fabric
 2 to 3
 ======
 
+https://six.readthedocs.io/
+
+Six: Python 2 and 3 Compatibility Library
+
+可以参考Six库，其中有2和3的对比
+
 字符集统一使用unicode
 
 >>> x = 'abc'
