@@ -10,4 +10,4 @@
 rootProject.name = 'hello_03'
 
 include "conf"
-include "brchqry"
+include "brchqry", "brchrpt"
