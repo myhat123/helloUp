@@ -45,3 +45,7 @@ option(key, value)
 
 http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.Row
 
+spark日期时间
+============
+
+> spark-submit --master spark://localhost:7077 --conf "spark.pyspark.driver.python=/home/hzg/.pyenv/versions/gopy3.6/bin/python" --conf "spark.pyspark.python=/home/hzg/.pyenv/versions/gopy3.6/bin/python" --packages com.datastax.spark:spark-cassandra-connector_2.11:2.5.1,com.github.jnr:jnr-posix:3.1.1 test03.py
