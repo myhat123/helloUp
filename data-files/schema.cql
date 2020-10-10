@@ -1,7 +1,7 @@
 CREATE KEYSPACE finance
     WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 1};
 
-create table brch_qry_dtl (
+create table finance.brch_qry_dtl (
     acc varchar, 
     tran_date date, 
     amt decimal, 

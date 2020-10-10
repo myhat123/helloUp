@@ -7,7 +7,7 @@ postgresql 12
 pgbouncer  
 airflow 1.10.12  
 pandas 1.1.2  
-go 1.5.2  
+go 1.15.2  
 
 示例
 ====
@@ -21,9 +21,9 @@ hello_05  时间同步
 hello_06  airflow  
 hello_07  cassandra  
 hello_08  pandas  
-hello_09  pyenv管理多版本py
-hello_10  spark 3.0.1 示例
-hello_11  spark python示例
+hello_09  pyenv管理多版本py  
+hello_10  spark 3.0.1 示例  
+hello_11  spark python示例  
 
 hello_13  go-oci8读取  
 hello_14  godror读取  
