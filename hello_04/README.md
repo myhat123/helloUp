@@ -275,3 +275,21 @@ SELECT
 SELECT
     pg_size_pretty (pg_indexes_size('brch_qry_dtl'));
 ```
+
+usql
+====
+
+数据库客户端
+
+https://github.com/xo/usql
+
+安装
+
+```sh
+go env -w GO111MODULE=on
+go env -w GOPROXY=https://goproxy.io,direct
+go get -u -tags most github.com/xo/usql
+```
+
+tags most 不包括 oracle, odbc,  
+all drivers excluding Oracle and ODBC (requires CGO and additional dependencies)
