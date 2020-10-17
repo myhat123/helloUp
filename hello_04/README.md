@@ -196,3 +196,82 @@ postgresql 11 并行进程调整为两类:
 
 4. max_parallel_maintenance_workers
 设置维护命令(例如 CREATE INDEX) 允许的最大并行进程数，默认值为2。
+
+系统管理
+=======
+
+参考资料: https://www.postgresqltutorial.com/postgresql-administration/
+
+显示数据表
+
+```sql
+SELECT *
+FROM pg_catalog.pg_tables
+WHERE schemaname != 'pg_catalog' AND 
+    schemaname != 'information_schema';
+```
+
+显示数据库
+
+```sql
+SELECT datname FROM pg_database;
+```
+
+显示数据表结构
+
+```sql
+SELECT 
+   table_name, 
+   column_name, 
+   data_type 
+FROM 
+   information_schema.columns
+WHERE 
+   table_name = 'brch_qry_dtl';
+```
+
+显示模式
+
+```sql
+SELECT * 
+FROM pg_catalog.pg_namespace
+ORDER BY nspname;
+```
+
+显示数据表大小
+
+```sql
+select pg_relation_size('brch_qry_dtl');
+```
+
+```sql
+SELECT pg_size_pretty (pg_relation_size('brch_qry_dtl'));
+```
+
+```sql
+SELECT
+    pg_size_pretty (
+        pg_total_relation_size ('brch_qry_dtl')
+    );
+```
+
+显示数据库大小
+
+```sql
+SELECT
+    pg_size_pretty (
+        pg_database_size ('jr')
+    );
+```
+
+```sql
+SELECT
+    pg_database.datname,
+    pg_size_pretty(pg_database_size(pg_database.datname)) AS size
+    FROM pg_database;
+```
+
+```sql
+SELECT
+    pg_size_pretty (pg_indexes_size('brch_qry_dtl'));
+```
