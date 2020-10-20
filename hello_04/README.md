@@ -134,6 +134,12 @@ postgres=# select usename, passwd from pg_shadow order by 1;
 (2 行记录)
 ```
 
+/etc/pgbouncer/userlist.txt 内容如下:
+
+```
+"jxyz" "md5a92ce60d478cd50a0797b73b83df53de"
+```
+
 > sudo /etc/init.d/pgbouncer restart
 
 通过pgbouncer连接数据库，默认是20个连接  
