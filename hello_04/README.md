@@ -33,7 +33,8 @@ sudo apt-get install postgresql-12
 ```
 
 配置文件目录  /etc/postgresql/12/main  
-pg_hba.conf  postgresql.conf
+pg_hba.conf  
+postgresql.conf
 
 4. 安装pgbouncer
 
@@ -60,21 +61,29 @@ pgbouncer目前支持三种连接池模型。分别是session, transaction和sta
 创建数据库
 =========
 
+```sh
 sudo su
 su - postgres
 createuser -P -e jxyz (密码: 1234)
 createdb -O jxyz -E utf8 jr
+```
 
-psql -h localhost -U jxyz -d jr
+> psql -h localhost -U jxyz -d jr
+
+```sql
 create schema finance
+```
 
-psql -h localhost -U jxyz -d jr < ../data-files/schema.sql
+> psql -h localhost -U jxyz -d jr < ../data-files/schema.sql
 
-psql中切换模式  
+psql中切换模式
+
+```sql
 show search_path;
 set search_path to finance;
 
 ALTER ROLE jxyz SET search_path = finance;
+```
 
 python psycopg2安装
 ==================
@@ -112,6 +121,7 @@ auth_type = md5
 
 使用apt-get安装后，有 /usr/share/pgbouncer/mkauth.py
 
+```sh
 sudo su
 su - postgres
 psql
@@ -122,8 +132,9 @@ postgres=# select usename, passwd from pg_shadow order by 1;
  jxyz     | md5a92ce60d478cd50a0797b73b83df53de
  postgres | 
 (2 行记录)
+```
 
-sudo /etc/init.d/pgbouncer restart
+> sudo /etc/init.d/pgbouncer restart
 
 通过pgbouncer连接数据库，默认是20个连接  
 psql -h localhost -p 6432 -U jxyz -d db_jr
