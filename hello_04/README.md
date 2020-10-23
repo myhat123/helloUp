@@ -33,7 +33,8 @@ sudo apt-get install postgresql-12
 ```
 
 配置文件目录  /etc/postgresql/12/main  
-pg_hba.conf  postgresql.conf
+pg_hba.conf  
+postgresql.conf
 
 4. 安装pgbouncer
 
@@ -60,21 +61,29 @@ pgbouncer目前支持三种连接池模型。分别是session, transaction和sta
 创建数据库
 =========
 
+```sh
 sudo su
 su - postgres
 createuser -P -e jxyz (密码: 1234)
 createdb -O jxyz -E utf8 jr
+```
 
-psql -h localhost -U jxyz -d jr
+> psql -h localhost -U jxyz -d jr
+
+```sql
 create schema finance
+```
 
-psql -h localhost -U jxyz -d jr < ../data-files/schema.sql
+> psql -h localhost -U jxyz -d jr < ../data-files/schema.sql
 
-psql中切换模式  
+psql中切换模式
+
+```sql
 show search_path;
 set search_path to finance;
 
 ALTER ROLE jxyz SET search_path = finance;
+```
 
 python psycopg2安装
 ==================
@@ -112,6 +121,7 @@ auth_type = md5
 
 使用apt-get安装后，有 /usr/share/pgbouncer/mkauth.py
 
+```sh
 sudo su
 su - postgres
 psql
@@ -122,8 +132,15 @@ postgres=# select usename, passwd from pg_shadow order by 1;
  jxyz     | md5a92ce60d478cd50a0797b73b83df53de
  postgres | 
 (2 行记录)
+```
 
-sudo /etc/init.d/pgbouncer restart
+/etc/pgbouncer/userlist.txt 内容如下:
+
+```
+"jxyz" "md5a92ce60d478cd50a0797b73b83df53de"
+```
+
+> sudo /etc/init.d/pgbouncer restart
 
 通过pgbouncer连接数据库，默认是20个连接  
 psql -h localhost -p 6432 -U jxyz -d db_jr
@@ -196,3 +213,100 @@ postgresql 11 并行进程调整为两类:
 
 4. max_parallel_maintenance_workers
 设置维护命令(例如 CREATE INDEX) 允许的最大并行进程数，默认值为2。
+
+系统管理
+=======
+
+参考资料: https://www.postgresqltutorial.com/postgresql-administration/
+
+显示数据表
+
+```sql
+SELECT *
+FROM pg_catalog.pg_tables
+WHERE schemaname != 'pg_catalog' AND 
+    schemaname != 'information_schema';
+```
+
+显示数据库
+
+```sql
+SELECT datname FROM pg_database;
+```
+
+显示数据表结构
+
+```sql
+SELECT 
+   table_name, 
+   column_name, 
+   data_type 
+FROM 
+   information_schema.columns
+WHERE 
+   table_name = 'brch_qry_dtl';
+```
+
+显示模式
+
+```sql
+SELECT * 
+FROM pg_catalog.pg_namespace
+ORDER BY nspname;
+```
+
+显示数据表大小
+
+```sql
+select pg_relation_size('brch_qry_dtl');
+```
+
+```sql
+SELECT pg_size_pretty (pg_relation_size('brch_qry_dtl'));
+```
+
+```sql
+SELECT
+    pg_size_pretty (
+        pg_total_relation_size ('brch_qry_dtl')
+    );
+```
+
+显示数据库大小
+
+```sql
+SELECT
+    pg_size_pretty (
+        pg_database_size ('jr')
+    );
+```
+
+```sql
+SELECT
+    pg_database.datname,
+    pg_size_pretty(pg_database_size(pg_database.datname)) AS size
+    FROM pg_database;
+```
+
+```sql
+SELECT
+    pg_size_pretty (pg_indexes_size('brch_qry_dtl'));
+```
+
+usql
+====
+
+数据库客户端
+
+https://github.com/xo/usql
+
+安装
+
+```sh
+go env -w GO111MODULE=on
+go env -w GOPROXY=https://goproxy.io,direct
+go get -u -tags most github.com/xo/usql
+```
+
+tags most 不包括 oracle, odbc,  
+all drivers excluding Oracle and ODBC (requires CGO and additional dependencies)
