@@ -40,8 +40,11 @@ sudo timedatectl status
 sudo timedatectl set-time 15:58:30
 sudo timedatectl set-time '16:10:40 2015-11-20'
 
+sudo timedatectl list-timezones
+sudo timedatectl set-timezone "Asia/Shanghai"
+
 将硬件时钟设置为本地时区  
-sudo timedatectl set-local-rtc 1 --adjust -system-clock
+sudo timedatectl set-local-rtc 1 --adjust-system-clock
 
 将硬件时钟设置为协调世界时（UTC）  
 sudo timedatectl set-local-rtc 0
