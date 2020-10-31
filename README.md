@@ -24,6 +24,7 @@ hello_08  pandas
 hello_09  pyenv管理多版本py  
 hello_10  spark 3.0.1 示例  
 hello_11  spark python示例  
+hello_12  spark clickhouse示例 
 
 hello_13  go-oci8读取  
 hello_14  godror读取  
