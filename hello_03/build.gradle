@@ -1,5 +1,6 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "6.0.0" apply false
+    id "com.github.hierynomus.scalariform" version "0.4.0"
 }
 
 allprojects {
@@ -17,6 +18,7 @@ subprojects {
     // version = '1.0'
     apply plugin: 'scala'
     apply plugin: 'com.github.johnrengelman.shadow'
+    apply plugin: 'com.github.hierynomus.scalariform'
 
     if (project.name != 'conf') {
         println "project name: ${project.name}"
@@ -45,9 +47,17 @@ subprojects {
 
 project(':conf') {
     apply plugin: 'scala'
+    apply plugin: 'com.github.hierynomus.scalariform'
 
     dependencies {
         // Use Scala 2.12 in our library project
         compileOnly 'org.scala-lang:scala-library:2.11.12'
     }
 }
+
+scalariform {
+    alignParameters = true
+    alignSingleLineCaseStatements = true
+}
+
+formatAllScala
