@@ -15,6 +15,8 @@ spark 3.0.1 使用的 scala 2.12
 
 spark 3.x的特色
 
+https://blog.csdn.net/zyzzxycj/article/details/106469572
+
 http://blog.madhukaraphatak.com/spark-aqe-part-1/  
 http://blog.madhukaraphatak.com/spark-aqe-part-2/
 
