@@ -10,6 +10,28 @@ spark 3.0.1 使用的 scala 2.12
 
 示例沿用hello_03，修改gradle中的版本配置
 
+自适应执行
+=========
+
+spark 3.x的特色
+
+http://blog.madhukaraphatak.com/spark-aqe-part-1/  
+http://blog.madhukaraphatak.com/spark-aqe-part-2/
+
+https://blog.knoldus.com/adaptive-query-execution-aqe-in-spark-3-0/
+
+```scala
+val spark = SparkSession
+    .builder
+    .config("spark.cassandra.connection.host", CassSetting.host)
+    .config("spark.cassandra.auth.username", CassSetting.username)
+    .config("spark.cassandra.auth.password", CassSetting.password)
+    .config("spark.sql.adaptive.enabled", "true")
+    .config("spark.sql.adaptive.coalescePartitions.enabled", "true")
+    .appName("查询cassandra数据")
+    .getOrCreate()
+```
+
 启动spark
 =========
 spark 3.0.1

@@ -20,7 +20,7 @@ object FinTest {
     import spark.implicits._
 
     val df = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true"))
-                        .csv("file:///home/hzg/work/helloSpark/data-files/data.csv")
+                        .csv("file:///home/hzg/work/helloUp/data-files/data.csv")
     df.createOrReplaceTempView("qry_dtl")
 
     df.write

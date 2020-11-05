@@ -13,6 +13,8 @@ object BrchQry {
       .config("spark.cassandra.connection.host", CassSetting.host)
       .config("spark.cassandra.auth.username", CassSetting.username)
       .config("spark.cassandra.auth.password", CassSetting.password)
+      .config("spark.sql.adaptive.enabled", "true")
+      .config("spark.sql.adaptive.coalescePartitions.enabled", "true")
       .appName("查询cassandra数据")
       .getOrCreate()
 
