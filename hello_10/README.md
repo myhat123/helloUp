@@ -122,3 +122,14 @@ hello_03 执行时间 14s ~ 15s
 > ./sbin/stop-slave.sh
 
 > ./sbin/stop-master.sh
+
+spark shell
+===========
+
+> spark-shell --master spark://localhost:7077 --packages com.datastax.spark:spark-cassandra-connector_2.12:3.0.0 --conf spark.cassandra.connection.host=localhost --conf spark.cassandra.auth.username=cassandra --conf spark.cassandra.auth.password=cassandra --conf spark.sql.extensions=com.datastax.spark.connector.CassandraSparkExtensions
+
+spark.conf.set(s"spark.sql.catalog.mycat", "com.datastax.spark.connector.datasource.CassandraCatalog")
+
+spark.sql("select count(*) from mycat.finance.brch_qry_dtl").show()
+
+spark.sql("select count(*) from mycat.finance.brch_qry_dtl").explain()
