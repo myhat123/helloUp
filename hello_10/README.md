@@ -37,6 +37,8 @@ val spark = SparkSession
 安全提交
 =======
 
+https://stackoverflow.com/questions/47908699/authentication-for-spark-standalone-cluster
+
 conf/spark-defaults.conf
 
 spark.authenticate.secret      abc1234
