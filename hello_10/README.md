@@ -34,6 +34,16 @@ val spark = SparkSession
     .getOrCreate()
 ```
 
+安全提交
+=======
+
+conf/spark-defaults.conf
+
+spark.authenticate.secret      abc1234
+
+代码增加配置参数  
+.conf("spark.authenticate.secret", "abc1234")
+
 启动spark
 =========
 spark 3.0.1
