@@ -46,6 +46,46 @@ spark.authenticate.secret      abc1234
 代码增加配置参数  
 .conf("spark.authenticate.secret", "abc1234")
 
+DataFrame
+=========
+
+https://github.com/datastax/spark-cassandra-connector/blob/master/doc/14_data_frames.md
+
+采用catalog方式读取cassandra
+
+```scala
+val spark = SparkSession
+    .builder
+    .config("spark.cassandra.connection.host", CassSetting.host)
+    .config("spark.cassandra.auth.username", CassSetting.username)
+    .config("spark.cassandra.auth.password", CassSetting.password)
+    .config("spark.sql.adaptive.enabled", "true")
+    .config("spark.sql.adaptive.coalescePartitions.enabled", "true")
+    .config("spark.sql.extensions", "com.datastax.spark.connector.CassandraSparkExtensions")
+    .config("spark.sql.catalog.cass100", "com.datastax.spark.connector.datasource.CassandraCatalog")
+    .appName("查询cassandra数据")
+    .getOrCreate()
+
+import spark.implicits._
+
+// val df = spark
+//     .read
+//     .format("org.apache.spark.sql.cassandra")
+//     .options(Map( "table" -> "brch_qry_dtl", "keyspace" -> "finance"))
+//     .load
+
+// df.createOrReplaceTempView("qry_dtl")
+
+spark.sql("""
+    select count(*) from cass100.finance.brch_qry_dtl
+""").show()
+
+spark.stop()
+```
+
+这种方式简化了读取的方式
+
+
 启动spark
 =========
 spark 3.0.1

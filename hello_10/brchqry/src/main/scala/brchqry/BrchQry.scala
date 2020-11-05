@@ -15,6 +15,8 @@ object BrchQry {
       .config("spark.cassandra.auth.password", CassSetting.password)
       .config("spark.sql.adaptive.enabled", "true")
       .config("spark.sql.adaptive.coalescePartitions.enabled", "true")
+      .config("spark.sql.extensions", "com.datastax.spark.connector.CassandraSparkExtensions")
+      .config("spark.cassandra.input.fetch.sizeInRows", "10000")
       .appName("查询cassandra数据")
       .getOrCreate()
 
