@@ -28,3 +28,5 @@ hello_12  spark clickhouse示例
 
 hello_13  go-oci8读取  
 hello_14  godror读取  
+
+hello_15  spark写入postgresql示例

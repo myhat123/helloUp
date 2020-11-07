@@ -6,3 +6,5 @@ create table finance.brch_qry_dtl (
     rpt_sum character varying(8), 
     timestamp1 character varying(14)
 );
+
+create index brch_qry_dtl_acc_index on brch_qry_dtl (tran_date, acc);
