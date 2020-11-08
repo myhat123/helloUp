@@ -31,3 +31,5 @@ hello_14  godror读取
 
 hello_15  spark写入postgresql示例  
 hello_16  fabric执行远程命令
+
+hello_17  spark读取cassandra写入clickhouse
