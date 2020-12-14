@@ -57,3 +57,19 @@ gradle shadowJar
 > spark-submit --master spark://localhost:7077 --class hello_01.SparkPi ./build/libs/hello_01-all.jar
 
 > spark-submit --master spark://localhost:7077 --deploy-mode client --total-executor-cores 2 --executor-memory 512M --class hello_01.SparkPi ./build/libs/hello_01-all.jar
+
+spark参数优化
+============
+
+在实战项目中，spark 2.4.7增加了参数来优化计算
+
+spark-defaults.conf
+
+spark.default.parallelism          120  
+spark.sql.shuffle.partitions       120  
+spark.speculation                  true  
+
+spark.shuffle.file.buffer          64kb  
+spark.reducer.maxSizeInFlight      96mb    
+
+计算速度提升较多
