@@ -30,6 +30,22 @@ https://github.com/pyenv/pyenv-installer
 
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 
+直接下载 pyenv-installer 脚本
+
+chmod +x pyenv-installer
+./pyenv-installer
+
+配置.bashrc
+
+```bash
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+```
+
 安装python
 ==========
 
@@ -40,8 +56,22 @@ pyenv install --list
 pyenv versions
 
 构建单独的虚拟环境  
-pyenv virtualenv 3.8.2 gopy3
+pyenv virtualenv 3.8.6 gopy3
 pyenv activate gopy3
+
+配置~/.pip/pip.conf
+==================
+
+```ini
+[global]
+index-url = https://mirrors.cloud.tencent.com/pypi/simple
+[install]
+trusted-host = mirrors.cloud.tencent.com
+```
+
+升级pip
+======
+/home/hzgtest/.pyenv/versions/3.8.6/envs/gopy3/bin/python3.8 -m pip install --upgrade pip
 
 supervisor
 ==========
